@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Management</title>
+    <link rel="stylesheet" href="../static/styles.css" />
+</head>
+<body>
+    <!-- CTA -->
+    <section class="section-cta" id="cta">
+        <div class="container">
+            <div class="cta">
+                <div class="cta-text-box">
+                    <h2 class="heading-secondary">Add New Item</h2>
+                    <p class="cta-text">
+                        Add items to your inventory. Manage your stock, item categories, quantities, and more.
+                    </p>
+                    <form action="/add_item" method="POST" class="cta-form">
+                        <div>
+                            <label for="item-name">Item Name</label>
+                            <input type="text" id="item-name" name="item-name" placeholder="e.g., Laptop" required />
+                        </div>
+
+                        <div>
+                            <label for="category">Category</label>
+                            <input type="text" id="category" name="category" placeholder="e.g., Electronics" required />
+                        </div>
+
+                        <div>
+                            <label for="quantity">Quantity</label>
+                            <input type="number" id="quantity" name="quantity" placeholder="e.g., 10" required />
+                        </div>
+
+                        <div>
+                            <label for="price">Price per Unit ($)</label>
+                            <input type="number" id="price" name="price" step="0.01" placeholder="e.g., 1000.00" required />
+                        </div>
+
+                        <button class="btn btn-form" type="submit">Add Item</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    
+        <section>
+            <h2>Inventory List</h2>
+            <ul class="user-list">
+                {% for item in inventory %}
+                    <li class="user-item">
+                        <form action="/update_item/{{ item.id }}" method="POST" class="user-form">
+                            <input type="text" name="item-name" value="{{ item.item_name }}" required class="user-input">
+                            <input type="text" name="category" value="{{ item.category }}" required class="user-input">
+                            <input type="number" name="quantity" value="{{ item.quantity }}" required class="user-input">
+                            <input type="number" name="price" value="{{ item.price }}" step="0.01" required class="user-input">
+                            <button type="submit" class="user-button">Update</button>
+                        </form>
+                        <form action="/delete_item/{{ item.id }}" method="POST" class="user-form">
+                            <button type="submit" class="user-button delete-button">Delete</button>
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+    </section>
+</body>
+</html>
