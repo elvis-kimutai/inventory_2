@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 import psycopg2
 import os
+from transformers import pipeline
 
 app = Flask(__name__)
 
@@ -8,19 +9,43 @@ app = Flask(__name__)
 DATABASE_URL = "postgresql://inventory_db_dbnj_user:XztJiqM6PGprH34UUIAuQIn4GmYGn7ww@dpg-cs7mfqrv2p9s73f5ei5g-a.oregon-postgres.render.com/inventory_db_dbnj"
 db = psycopg2.connect(DATABASE_URL)
 
-# Ensure the inventory table exists
+# Ensure the inventory table exists and add 'description' column if it is missing
 cursor = db.cursor()
+
+# Check if 'description' column exists
+cursor.execute("""
+    SELECT column_name
+    FROM information_schema.columns 
+    WHERE table_name='inventory' AND column_name='description';
+""")
+
+# If description column does not exist, alter the table to add it
+if cursor.fetchone() is None:
+    cursor.execute("ALTER TABLE inventory ADD COLUMN description TEXT;")
+    db.commit()
+
+# Create table if it doesn't exist
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS inventory (
         id SERIAL PRIMARY KEY,
         item_name VARCHAR(255) NOT NULL,
         category VARCHAR(255),
         quantity INTEGER,
-        price DECIMAL(10, 2)
+        price DECIMAL(10, 2),
+        description TEXT
     );
 ''')
 db.commit()
 cursor.close()
+
+# Initialize the Hugging Face pipeline for text generation
+description_generator = pipeline("text-generation", model="gpt2")  # You can choose other models
+
+# Function to generate item description using Hugging Face
+def generate_description(item_name, category, quantity):
+    prompt = f"Generate a detailed description for an inventory item named '{item_name}', in the category '{category}', with a quantity of {quantity}."
+    response = description_generator(prompt, max_length=100, num_return_sequences=1)
+    return response[0]['generated_text'].strip()
 
 @app.route('/')
 def index():
@@ -41,9 +66,13 @@ def add_item():
     category = request.form['category']
     quantity = request.form['quantity']
     price = request.form['price']
+    
+    # Generate description using Hugging Face model
+    description = generate_description(item_name, category, quantity)
+    
     cursor = db.cursor()
-    cursor.execute("INSERT INTO inventory (item_name, category, quantity, price) VALUES (%s, %s, %s, %s)",
-                   (item_name, category, quantity, price))
+    cursor.execute("INSERT INTO inventory (item_name, category, quantity, price, description) VALUES (%s, %s, %s, %s, %s)",
+                   (item_name, category, quantity, price, description))
     db.commit()
     cursor.close()
     return redirect(url_for('index'))
