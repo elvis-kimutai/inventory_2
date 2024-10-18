@@ -1,150 +1,193 @@
+/* General Styles */
 body {
   font-family: "Rubik", sans-serif;
-  line-height: 1;
-  font-weight: 400;
   color: #555;
-  overflow-x: visible;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+  background-color: #fdf2e9;
+}
+
+header {
+  background-color: #f4f4f4;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+h1 {
+  font-size: 1.8rem;
+  color: #45260a;
 }
 
 .section-cta {
-  padding: 4.8rem 0 12.8rem;
+  padding: 2.5rem 1rem 6rem;
 }
 
 .cta {
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  background-image: linear-gradient(to right bottom, #eb984e, #e67e22);
+  grid-template-columns: 1fr;
+  background: linear-gradient(to right bottom, #eb984e, #e67e22);
   box-shadow: 0 2.4rem 4.8rem rgba(0, 0, 0, 0.15);
-  border-radius: 11px;
+  border-radius: 15px;
   overflow: hidden;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 .cta-text-box {
-  color: #45260a;
-  padding: 4.8rem 6.4em 6.4rem 6.4rem;
+  padding: 3.2rem 2rem;
 }
 
-.cta .heading-secondary {
+.heading-secondary {
   color: #45260a;
-  margin-bottom: 3.2rem;
+  margin-bottom: 2rem;
+  font-size: 1.6rem;
 }
 
 .cta-text {
-  font-size: 1.8rem;
-  line-height: 1.8;                                                                                                                           margin-bottom: 4.8rem;
+  font-size: 1.4rem;
+  line-height: 1.4;
+  margin-bottom: 2.5rem;
+  color: #333;
 }
 
 .cta-form {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 3.2rem;
-  row-gap: 2.4rem;
+  grid-template-columns: 1fr;
+  gap: 1.8rem;
+  max-width: 500px;
+  margin: 0 auto;
 }
 
+/* Form Elements Styling */
 .cta-form label {
-  display: block;
-  font-size: 1.8rem;
-  font-weight: 500;
-  margin-bottom: 1.2rem;
+  font-size: 1.4rem;
+  color: #555;
 }
 
-.cta-form input,
-.cta-form select {
+.cta-form input, .cta-form textarea {
   width: 100%;
-  padding: 1.2rem;
-  font-size: 1.8rem;
-  font-family: inherit;
-  color: inherit;
-  border: none;
-  background-color: #fdf2e9;
-  border-radius: 9px;
-  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
+  padding: 0.8rem;
+  font-size: 1.4rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9e4d4;
+  color: #333;
 }
 
-.cta-form input::placeholder {
-  color: #aaa;
-}                                                                                                                                              .cta-img {
-  background-image: linear-gradient(
-      to right bottom,
-      rgba(235, 151, 78, 0.35),
-      rgba(230, 125, 34, 0.35)
-    ),
-    url(image/tech.png);
-  background-size: cover;
-  background-position: center;
-}
-
-.cta *:focus {
+.cta-form input:focus, .cta-form textarea:focus {
+  border-color: #e67e22;
   outline: none;
-  box-shadow: 0 0 0 0.8rem rgba(253, 242, 233, 0.5);
 }
 
 .btn-form {
-  align-self: end;
-  padding: 1.2rem;
-  color: #fdf2e9;
+  padding: 0.8rem;
   background-color: #45260a;
+  color: white;
+  font-size: 1.4rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .btn-form:hover {
-  color: #555;
+  background-color: white;
+  color: #45260a;
+  border: 1px solid #45260a;
+}
+
+.inventory-list {
+  margin: 1.5rem auto;
+  text-align: center;
+  padding: 1.5rem;
   background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2.4rem 4.8rem rgba(0, 0, 0, 0.05);
+  max-width: 800px;
 }
 
 .user-list {
-    list-style-type: none;
-    padding: 0;
-    max-width: 800px;
-    margin: 20px auto;
-    background-color: #fff;                                                                                                               list-style-type: none;
-    padding: 0;
-    max-width: 800px;
-    margin: 20px auto;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
 
 .user-item {
-    display: grid;
-    grid-template-columns: 2fr 2fr 1fr 1fr;
-    gap: 10px;
-    align-items: center;
-    padding: 15px;
-    border-bottom: 1px solid #eaeaea;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid #ddd;
+  font-size: 1.2rem;
+  color: #444;
 }
 
 .user-form {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .user-input {
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    outline: none;
-    flex: 1;
+  padding: 0.6rem;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  border: 1px solid #ddd;
 }
 
 .user-button {
-               padding: 8px 12px;
-    border: none;
-    border-radius: 4px;
-    background-color: #3498db;
-    color: #fff;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  padding: 0.6rem 1rem;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 1.2rem;
 }
 
 .user-button:hover {
-    background-color: #2980b9;
+  background-color: #2980b9;
 }
 
 .delete-button {
-    background-color: #e74c3c;
+  background-color: #e74c3c;
+  border: none;
+  border-radius: 5px;
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.3s ease;
+  font-size: 1.2rem;
 }
 
 .delete-button:hover {
-    background-color: #c0392b;  
+  background-color: #c0392b;
+}
+
+/* Footer Styling */
+footer {
+  text-align: center;
+  padding: 1.5rem;
+  background-color: #f4f4f4;
+  color: #777;
+  font-size: 1.2rem;
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+  .cta {
+    grid-template-columns: 2fr 1fr;
+  }
+
+  .cta-text-box {
+    padding: 4.8rem 6.4rem;
+  }
+
+  .cta-form {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+}
+
