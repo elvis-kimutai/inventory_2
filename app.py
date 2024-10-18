@@ -38,15 +38,19 @@ cursor.execute('''
 db.commit()
 cursor.close()
 
-# Initialize the Hugging Face pipeline for text generation
-description_generator = pipeline("text-generation", model="gpt2")  # You can choose other models
+# Initialize the Hugging Face pipeline for text generation with a smaller model
+description_generator = pipeline("text-generation", model="distilgpt2")  # Using distilgpt2 for lower memory consumption
 
 # Function to generate item description using Hugging Face
 def generate_description(item_name, category, quantity):
-    prompt = f"Generate a detailed description for an inventory item named '{item_name}', in the category '{category}', with a quantity of {quantity}."
-    response = description_generator(prompt, max_length=100, num_return_sequences=1)
+    prompt = (
+        f"Please write a simple yet detailed description of an inventory item. "
+        f"The item is called '{item_name}', it belongs to the '{category}' category, "
+        f"and there are {quantity} available. "
+        f"Include its purpose, features, and any other relevant details that would inform potential buyers."
+    )
+    response = description_generator(prompt, max_length=150, num_return_sequences=1)
     return response[0]['generated_text'].strip()
-
 @app.route('/')
 def index():
     try:
@@ -100,3 +104,4 @@ def delete_item(id):
 
 if __name__ == '__main__':
     app.run(debug=True)
+
